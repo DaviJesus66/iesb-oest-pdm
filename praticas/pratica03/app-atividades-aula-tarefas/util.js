@@ -1,3 +1,9 @@
-export let titulo = "Olá Mundo";
+export const APP_TITLE = "Meu Diário Acadêmico";
 
-export default "Olá Mundo Default";
+export const INPUT_PLACEHOLDER = "Digite o nome da disciplina";
+
+export const BUTTON_TEXT = "Adicionar";
+
+export const LIST_TITLE = "Minhas disciplinas";
+
+export const SWITCH_LABEL = "Mostrar apenas obrigatórias";
