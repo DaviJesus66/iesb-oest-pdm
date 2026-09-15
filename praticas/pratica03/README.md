@@ -1,94 +1,69 @@
-# 💻 Prática 03: Interface Estática do To-Do List
+# MeuDiarioAcademico
 
-Chegou a hora de dar uma “cara” ao aplicativo. Nesta prática você constrói a **UI** da lista de tarefas usando componentes core, `StyleSheet` e Flexbox. **Ainda sem** adicionar/remover de verdade — o foco é layout.
+Atividade 01 — Fundamentos de UI, Componentes e Layout
+Disciplina: Programação para Dispositivos Móveis (React Native / Expo)
+Professor: Marcelo Alves Farias — IESB
 
-## 🎯 Objetivos
+## Sobre o app
 
-* Aplicar `View`, `Text`, `TextInput` e `TouchableOpacity`.
-* Organizar layout com Flexbox (`column` e `row`).
-* Criar estilos com `StyleSheet.create`.
-* Entregar uma tela legível no Expo Go.
+Tela inicial de cadastro rápido de disciplinas do semestre. Permite digitar o
+nome de uma disciplina, visualizar um botão "Adicionar" e uma lista (estática)
+das disciplinas já cadastradas no semestre.
 
----
-
-## 📦 Fluxo Git
-
-1. Crie a Issue da **Prática 03**.
-2. Crie a branch:
+## Comando usado para criar o projeto
 
 ```bash
-git checkout -b feature/pratica03
+npx create-expo-app@latest MeuDiarioAcademico --template blank
 ```
 
-3. Trabalhe no projeto Expo desta pasta (`praticas/pratica03`).  
-   Se ainda não existir app aqui, crie com `npx create-expo-app@latest` (como nas práticas anteriores) **ou** copie a base da Prática 02 e continue evoluindo.
+Em seguida, foi instalada a dependência de SafeAreaView atualizado:
 
 ```bash
+npx expo install react-native-safe-area-context
+```
+
+## Como rodar o projeto
+
+```bash
+cd pratica03
 npm install
 npx expo start
 ```
 
----
+Depois é só escanear o QR Code com o app Expo Go (Android) ou abrir no
+emulador Android pressionando `a` no terminal.
 
-## 🛠️ O que construir na tela
+## Organização do código
 
-Limpe o conteúdo padrão do arquivo principal e monte:
+- **labels.js** — concentra todos os textos/rótulos da tela (título do app,
+  placeholder do input, texto do botão, título da lista, rótulo do switch) e
+  são exportados como constantes.
+- **App.js** — importa os rótulos de `labels.js` e monta a interface:
+  - `SafeAreaView` (de `react-native-safe-area-context`) envolvendo a tela.
+  - Cabeçalho com o título do app.
+  - Linha (`flexDirection: 'row'`) com `TextInput` (~70% de largura) e um
+    `Pressable` como botão "Adicionar" (~30%, usando `flex`).
+  - Um `Switch` "Mostrar apenas obrigatórias" (desafio opcional, ainda sem
+    lógica de filtro).
+  - Lista estática de disciplinas, renderizada com `.map`.
+- **StyleSheet.create** — usado para todos os estilos (container, input,
+  botão, item da lista), com comentários no próprio `App.js` explicando o
+  porquê de cada `justifyContent`/`alignItems` escolhido.
+- **Dimensões** — o input usa largura percentual (`width: '68%'`) e o botão
+  usa `flex: 1` para ocupar o espaço restante da linha.
 
-### 1. Cabeçalho
+## Desafio opcional implementado
 
-* Título grande e em negrito: **Minhas Tarefas**
+- Botão "Adicionar" feito com `Pressable` em vez de `Button`, com estilo
+  diferente (`botaoPressionado`) quando pressionado.
+- `Switch` "Mostrar apenas obrigatórias" adicionado (sem filtro real ainda).
 
-### 2. Área de inserção
+## Prints da tela
 
-* Um `<TextInput>` com placeholder (ex.: `Digite uma tarefa...`)
-* Ao lado, um botão (`TouchableOpacity`) com texto `+` ou `Add`
-* Use uma `View` com `flexDirection: 'row'` para alinhá-los na mesma linha
+> Adicionar aqui os prints da tela rodando no emulador Android ou no Expo Go.
 
-### 3. Lista estática (hardcoded)
+- `assets/print-tela-inicial.png`
 
-Crie **2 ou 3 cards** fixos no JSX (ainda sem array dinâmico). Cada card deve ter:
+## Link do Pull Request
 
-* Um texto de tarefa (pode ser longo, para testar quebra de linha)
-* Um botão/texto `X` (lixeira simbólica) — ainda sem função real
-
----
-
-## 💡 Dicas de estilização
-
-* Na `View` raiz: `flex: 1` e `padding` para afastar das bordas.
-* No `TextInput`: `borderWidth`, `borderColor`, `borderRadius`, `padding`, `flex: 1`.
-* Nos cards: fundo claro, `borderRadius`, `padding`, `marginBottom`, e `flexDirection: 'row'` entre texto e `X`.
-* Use `StyleSheet.create` — evite deixar todos os estilos “inline” se a tela crescer.
-
-Esqueleto mental:
-
-```text
-View (container)
- ├── Text (Minhas Tarefas)
- ├── View (row)
- │    ├── TextInput
- │    └── TouchableOpacity (+)
- └── View (lista)
-      ├── View (card) → Text + TouchableOpacity (X)
-      ├── View (card)
-      └── View (card)
-```
-
----
-
-## ✅ Critérios de entrega
-
-* [ ] Layout agradável e legível no celular (Expo Go)
-* [ ] Título, input+botão em linha, e pelo menos 2 cards estáticos
-* [ ] Estilos via `StyleSheet`
-* [ ] Issue, branch `feature/pratica03`, commit, push e Pull Request
-
-### Commit sugerido
-
-```bash
-git add .
-git commit -m "Feat: Cria interface estatica do app de tarefas"
-git push origin feature/pratica03
-```
-
-Na **Aula 04**, a interface ganha vida com **estado (`useState`)**: digitar, adicionar e remover tarefas de verdade.
+> Adicionar aqui o link do PR do projeto.

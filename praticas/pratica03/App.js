@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Pressable, Switch, StatusBar} from "react-native";
+import { StyleSheet, Text, View, TextInput, Pressable, Switch, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { APP_TITLE, INPUT_PLACEHOLDER, BUTTON_TEXT, LIST_TITLE, SWITCH_LABEL } from "./labels";
+
+import {
+  APP_TITLE,
+  INPUT_PLACEHOLDER,
+  BUTTON_TEXT,
+  LIST_TITLE,
+  SWITCH_LABEL,
+} from "./labels";
 
 const disciplinasIniciais = [
   { id: "1", nome: "Programação para Dispositivos Móveis" },
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
 
   header: {
     marginBottom: 16,
-    alignItems: "center", 
+    alignItems: "center",
   },
   headerTitle: {
     fontSize: 22,

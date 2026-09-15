@@ -1,5 +1,5 @@
 {
-  "name": "app-atividades-aula-tarefas",
+  "name": "meu-diario-academico",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,11 +9,13 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~54.0.36",
-    "expo-status-bar": "~2.0.1",
-    "react": "18.3.1",
-    "react-native": "0.76.7"
-  },
+  "expo": "^57.0.0",
+  "expo-asset": "~57.0.17",
+  "expo-status-bar": "~57.0.1",
+  "react": "19.2.3",
+  "react-native": "0.86.3",
+  "react-native-safe-area-context": "~5.7.0"
+},
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
