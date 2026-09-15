@@ -7,3 +7,4 @@ export const BUTTON_TEXT = "Adicionar";
 export const LIST_TITLE = "Minhas disciplinas";
 
 export const SWITCH_LABEL = "Mostrar apenas obrigatórias";
+
