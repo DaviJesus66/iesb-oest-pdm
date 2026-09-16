@@ -1,79 +1,91 @@
-# 💻 Prática 05: FlatList e App que Não Esquece
+# MetasSemestre
 
-Nesta prática o To-Do ganha lista eficiente e persistência local. **Ainda não** vamos extrair componentes — isso é a Prática 06.
+Atividade — useState, props, componentização, Pressable, useEffect e
+AsyncStorage.
+Disciplina: Programação para Dispositivos Móveis (React Native / Expo)
+Professor: Marcelo Alves Farias — IESB
 
-## 🎯 Objetivos
+## Sobre o app
 
-* Substituir `.map()` por `FlatList`.
-* Salvar e carregar tarefas com AsyncStorage + `useEffect`.
-* Validar que fechar e reabrir o app mantém os dados.
+App de metas de estudo do semestre. O aluno cadastra uma meta, pode marcar
+como concluída (estilo riscado), remover, e tudo é salvo localmente com
+`AsyncStorage` — os dados continuam lá mesmo depois de fechar e reabrir o
+app.
 
----
-
-## 📦 Fluxo Git
-
-1. Crie a Issue da **Prática 05**.
-2. Branch:
+## Comandos usados para criar o projeto
 
 ```bash
-git checkout -b feature/pratica05
+npx create-expo-app@latest MetasSemestre --template blank
+cd MetasSemestre
+npx expo install @react-native-async-storage/async-storage react-native-safe-area-context
 ```
 
-3. Trabalhe em `praticas/pratica05` (evolua a base da Prática 04).
+## Como rodar o projeto
 
 ```bash
+cd pratica05
 npm install
 npx expo start
 ```
 
----
+Escaneie o QR Code com o Expo Go (Android) ou pressione `a` no terminal para
+abrir no emulador Android.
 
-## 🛠️ Parte A — FlatList
+## Organização do código
 
-1. Remova o `.map()` da lista.
-2. Importe `FlatList` de `react-native`.
-3. Configure:
-
-* `data={tasks}`
-* `keyExtractor={(item) => item.id}`
-* `renderItem={...}` desenhando cada tarefa (card ainda pode ficar inline no `App`)
-
-4. Teste adicionando **muitas** tarefas (15+) e confirme a rolagem suave.
-
----
-
-## 🛠️ Parte B — AsyncStorage
-
-1. Pare o bundler (Ctrl+C) e instale:
-
-```bash
-npx expo install @react-native-async-storage/async-storage
+```
+pratica05/
+├── App.js                  → estado, useEffects, orquestra os componentes
+├── components/
+│   ├── MetaInput.js        → TextInput + Pressable "Adicionar"
+│   └── MetaList.js         → FlatList das metas, concluir e remover
+├── assets/                 → ícones do app
+└── ...
 ```
 
-2. Crie `saveTasks` (async): grave a lista com `setItem` + `JSON.stringify`.
-3. Chame `saveTasks` após adicionar e após deletar (com a lista já atualizada).
-4. Crie `loadTasks` (async): leia com `getItem`, faça `JSON.parse` se houver valor, e use `setTasks`.
-5. No `useEffect` com `[]`, chame `loadTasks()` na montagem.
+### Componentização
+- **MetaInput.js** — componente controlado. Recebe `value`, `onChangeText`
+  e `onAdd` como props; não guarda nenhum estado próprio.
+- **MetaList.js** — recebe `metas`, `onDelete` e `onToggle` como props.
+  Usa `FlatList` (mais performático que `ScrollView` para listas, pois só
+  renderiza os itens visíveis na tela).
 
-### Teste extremo
+### Onde está cada useEffect (App.js)
 
-Adicione 3 tarefas → feche o app por completo (remover dos recentes) → abra de novo → as tarefas devem continuar lá.
+- **useEffect de CARGA** (linha ~30, logo após os `useState`): roda uma
+  única vez, quando o componente `App` é montado (array de dependências
+  `[]`). Ele lê a chave `@metas_semestre` do `AsyncStorage`, faz o
+  `JSON.parse` e popula o estado `metas`. Está dentro de um `try/catch`
+  para tratar erros de leitura com um `Alert`.
 
----
+- **useEffect de SALVAMENTO** (logo abaixo do de carga): roda toda vez que
+  o array `metas` muda (dependência `[metas, carregando]`). Faz o
+  `JSON.stringify` do array e salva na mesma chave `@metas_semestre`. Há
+  uma proteção (`if (carregando) return`) para não sobrescrever os dados
+  salvos com um array vazio antes da carga inicial terminar.
 
-## ✅ Critérios de entrega
+### Validações e UX
+- Não é possível adicionar meta com texto vazio (`Alert` de aviso).
+- IDs únicos gerados com `Date.now().toString()` — nunca usamos o índice
+  do array, que muda quando um item é removido.
+- Remoção sempre com `filter`, sem mutar o array original.
+- `Pressable` com `android_ripple` nos botões (Adicionar, Remover e no
+  item da lista para marcar como concluído).
 
-* [ ] `FlatList` rolando com muitos itens
-* [ ] Persistência: fechar e reabrir mantém as tarefas
-* [ ] Add e delete continuam funcionando
-* [ ] Issue, branch `feature/pratica05`, commit, push e Pull Request
+## Desafio opcional implementado
+- Campo `concluida: boolean` em cada meta — toque no texto da meta para
+  marcar/desmarcar (fica com estilo riscado).
+- Contador no cabeçalho: "X pendentes / Y concluídas".
 
-### Commit sugerido
+## Prints
 
-```bash
-git add .
-git commit -m "Feat: Adiciona FlatList e AsyncStorage para persistir tarefas"
-git push origin feature/pratica05
-```
+> Adicionar aqui os prints: lista vazia, lista com itens, e depois de
+> fechar/reabrir o app (mostrando que os dados persistiram).
 
-Na **Aula 06**, vamos **organizar o código**: extrair o card da tarefa para um componente reutilizável com props.
+- `assets/print-lista-vazia.png`
+- `assets/print-lista-com-itens.png`
+- `assets/print-apos-reabrir.png`
+
+## Link do Pull Request
+
+> Adicionar aqui o link do PR do projeto.
