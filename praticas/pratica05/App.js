@@ -6,25 +6,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import MetaInput from "./components/MetaInput";
 import MetaList from "./components/MetaList";
 
-// Chave usada no AsyncStorage para salvar/carregar as metas.
 const STORAGE_KEY = "@metas_semestre";
 
 export default function App() {
-  // useState do texto digitado no input (estado "controlado").
   const [texto, setTexto] = useState("");
 
-  // useState da lista de metas. Cada meta é um objeto:
-  // { id, texto, criadaEm, concluida }
   const [metas, setMetas] = useState([]);
 
-  // Enquanto os dados ainda não foram lidos do AsyncStorage, evitamos que
-  // o useEffect de SALVAR sobrescreva o storage com um array vazio.
   const [carregando, setCarregando] = useState(true);
 
-  // --------------------------------------------------------------------
-  // useEffect #1 — CARREGAR as metas do AsyncStorage quando o app monta.
-  // Roda apenas uma vez ([] como array de dependências).
-  // --------------------------------------------------------------------
   useEffect(() => {
     async function carregarMetas() {
       try {
@@ -45,14 +35,7 @@ export default function App() {
     carregarMetas();
   }, []);
 
-  // --------------------------------------------------------------------
-  // useEffect #2 — SALVAR as metas no AsyncStorage sempre que a lista
-  // (metas) mudar. Depende de [metas], ou seja, roda toda vez que o
-  // array é atualizado (adicionar, remover, marcar como concluída...).
-  // --------------------------------------------------------------------
   useEffect(() => {
-    // Evita salvar um array vazio por cima dos dados reais antes da
-    // primeira carga terminar.
     if (carregando) return;
 
     async function salvarMetas() {
@@ -84,7 +67,6 @@ export default function App() {
       concluida: false,
     };
 
-    // Nunca mutar o array existente (push) — sempre criar um novo array.
     setMetas((metasAtuais) => [...metasAtuais, novaMeta]);
     setTexto("");
   }

@@ -1,9 +1,5 @@
 import { View, TextInput, Pressable, Text, StyleSheet } from "react-native";
 
-// Componente controlado: quem guarda o estado do texto é o App.js (pai).
-// O MetaInput só recebe o valor atual (value), a função para atualizar
-// esse valor (onChangeText) e a função a ser chamada quando o usuário
-// quiser adicionar a meta (onAdd).
 export default function MetaInput({ value, onChangeText, onAdd }) {
   return (
     <View style={styles.row}>

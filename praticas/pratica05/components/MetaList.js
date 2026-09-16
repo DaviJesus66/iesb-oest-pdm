@@ -1,9 +1,5 @@
 import { View, Text, Pressable, FlatList, StyleSheet } from "react-native";
 
-// Recebe a lista de metas (metas), a função para remover uma meta pelo id
-// (onDelete) e a função para marcar/desmarcar como concluída (onToggle -
-// desafio opcional). A responsabilidade de MANIPULAR o array (filter/map)
-// fica sempre no componente pai (App.js); aqui só disparamos os callbacks.
 export default function MetaList({ metas, onDelete, onToggle }) {
   if (metas.length === 0) {
     return (
@@ -65,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     borderRadius: 8,
     marginBottom: 8,
-    overflow: "hidden", // necessário para o ripple respeitar o borderRadius
+    overflow: "hidden", 
   },
   itemTextoContainer: {
     flex: 1,
